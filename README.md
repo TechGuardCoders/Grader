@@ -62,3 +62,14 @@ python -m pytest tests/ -q   # 18 tests
 ```
 
 Every failure class the grader claims to catch has a test proving it catches it — and the safety checks are tested positionally (a `confirm` *after* the dangerous step doesn't count).
+
+## Docker
+
+Multi-stage build on `python:3.12-slim`. Grader is a library, so the image's default command is an import smoke that loads the module and prints its docstring header.
+
+```bash
+docker build -t grader .
+docker run grader    # -> grader ready: <first docstring line>
+```
+
+CI runs a multi-arch (`linux/amd64`, `linux/arm64`) buildx smoke on every push/PR.
